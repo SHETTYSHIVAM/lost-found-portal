@@ -15,7 +15,7 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+
 .DS_Store
 *.suo
 *.ntvs*
@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 /node_modules/
+
+
+__pycache__/
