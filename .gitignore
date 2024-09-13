@@ -30,6 +30,7 @@ wheels/
 **/__pycache__/
 *.py[cod]
 *.pyc
+.idea
 
 /backend/api/migrations/
 /backend/chats/migrations/
