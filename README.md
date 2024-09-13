@@ -4,6 +4,9 @@
  If you have lost an item, simply log into our portal and fill out a detailed report. Provide as much information as possible, including a description of the item, the date and location it was lost, and any unique identifiers. This information will be added to our database, making it easier for finders to identify and return your item.
  If you have found an item on campus, you can report it through our portal. Provide a detailed description of the found item and the location where it was discovered. This information will be matched with existing reports of lost items, and the owner will be notified.
 
+ The portal includes a real-time chat interface allowing users to communicate directly. Both the finder and the owner can initiate a chat to coordinate the return of the item.
+
+
 ## Table of Contents
 - [Installation](#installation)
 - [Backend Setup](#backend-setup)
@@ -54,7 +57,7 @@
    ```
 7.  Apply migrations
    ```bash
-    python manage.py migrate
+   python manage.py migrate
    ```
 8. Run the backend server (development)
    ```bash
