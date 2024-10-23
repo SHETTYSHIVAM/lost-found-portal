@@ -38,7 +38,7 @@ function ItemDetails() { // type lostitem founditem
             <div className="flex flex-col p-6 bg-gray-100 rounded-xl">
                 <h1 className="mb-6 text-3xl">{item.name}</h1>
                 <p className="text-gray-500 mb-2"><strong>{type === "lost-items" ? " lost " : " found "} At: </strong>{item.place}</p>
-                <p className="text-gray-500 mb-2"><strong>{type === "lost-items" ? " Owner " : " Finder "}: {item.owner} </strong></p>
+                <p className="text-gray-500 mb-2"><strong>{type === "lost-items" ? " Owner " : " Finder "}: {item.owner || item.finder} </strong></p>
                 <p className="text-gray-700">
                     <strong className="text-gray-500">Description: </strong><br />
                     {item.description}

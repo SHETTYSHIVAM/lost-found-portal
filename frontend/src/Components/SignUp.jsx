@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../utils/axios'
 
 export default function SignUp() {
-  const { isLoggedIn, setIsLoggedIn, name, setName, email, setEmail, handleLogout } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, setName, setUserId, setEmail } = useAuth();
 
   const URL = import.meta.env.VITE_API_URL+"/api/register";
   let navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("")
   
   useEffect(() => {
-    if (isLoggedIn) navigate("profile");
+    if (isLoggedIn) navigate("/profile");
   }, [isLoggedIn, navigate]);
 
   const handleSubmit = async (e) => {
@@ -36,16 +36,27 @@ export default function SignUp() {
     try {
       const res = await axiosInstance.post(URL, formData);
       const data = res.data;
+      console.log(data)
       if (data.success) {
         toast.success(data.message);
         setIsLoggedIn(true);
         setName(name);
         setEmail(email);
+        // Fetch current user data
+        const userRes = await axiosInstance.get('current-user/', {
+          headers: {
+            'Authorization': `Bearer ${data.access}`
+          }
+        });
+
+        const userData = userRes.data;
+        setUserId(userData.id)
         navigate("/profile");
       } else {
         toast.error(data.message);
       }
     } catch (error) {
+      console.log(error)
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
       } else {

@@ -6,8 +6,8 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const Chatroom = () => {
-  const {room} = useParams()
+const ChatroomId = () => {
+  let {room, otherUser} = useParams()
   const {name} = useAuth()
   const [messages, setMessages] = useState([]);
   const [value, setValue] = useState('');
@@ -138,7 +138,7 @@ const Chatroom = () => {
         <ContextMenu isVisible={isVisible} coords={coords} onSelect={(cmd) => handleSelect(cmd)} />
         <div className="mt-6">
           <div className="flex flex-row justify-between">
-            <div className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-4">Room Name: {room}</div>
+            <div className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-4">{otherUser.username}</div>
             <button onClick={darkModeHandler}>
               {dark ? <Sun /> : <Moon />}
             </button>
@@ -190,4 +190,4 @@ const Chatroom = () => {
   );
 };
 
-export default Chatroom;
+export default ChatroomId;

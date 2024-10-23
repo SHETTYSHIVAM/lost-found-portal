@@ -1,5 +1,4 @@
 import React from 'react'
-import { AuthProvider } from '../context/AuthContext'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -15,6 +14,7 @@ function OwnerInfo() {
     const [owner, setOwner] = useState(null);
 
     const {userId, name} = useAuth();
+    console.log(userId)
 
     const navigate = useNavigate()
 
@@ -39,15 +39,28 @@ function OwnerInfo() {
     const handleSubmit = async (e) => {
         console.log('uid', userId, ownerId)
 
-        try{
+        try {
+            // Replace userId and ownerId with the actual variables if they are props or state values
             const res = await axios.get(`http://127.0.0.1:8000/chats/create-or-get-chatroom/${userId}/${ownerId}/`);
-            const room = res.data.room_id
-            console.log("room", room)
-            navigate(`/chat/${room}`)
+            
+            // Extract the room ID from the response data
+            const room = res.data;
+            
+            // Log the room ID for debugging purposes
+            console.log("room", room);
+            const otherUser = room.users[0].username;
+            console.log(otherUser)
+        
+            // Navigate to the chat room
+            navigate(`/chat/${room.room_id}/${otherUser}`);
+        } catch (error) {
+            // Handle the error and log it
+            console.error("Error fetching chatroom:", error);
+            
+            // Optional: Show a user-friendly message if the request fails
+            alert("Unable to create or get the chat room. Please try again later.");
         }
-        catch(error){
-            console.error(error)
-        }
+        
     }
 
     return (

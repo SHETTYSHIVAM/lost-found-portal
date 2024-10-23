@@ -1,17 +1,10 @@
-from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render
-from django.utils import timezone
 # Create your views here.
 from django.http import JsonResponse
 from chats.models import ChatMessage, ChatRoom
-
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.views import View
-
-
+from pprint import pprint
 
 def get_messages(request, room_name):
     try:
@@ -30,6 +23,7 @@ def get_messages(request, room_name):
         for msg in messages
     ]
     return JsonResponse({'messages': message_list})
+
 
 def delete_message(request, room_name, message_id):
     try:
@@ -51,16 +45,17 @@ class CreateOrGetChatRoomView(View):
         user2 = get_object_or_404(User, id=user2_id)
         
         # Create a unique room ID by concatenating the user IDs or usernames in a sorted order
-        room_id = f"chat_{min(user1.id, user2.id)}_{max(user1.id, user2.id)}"
+        room_id = ChatRoom.create_id(user1, user2) # f"chat_{min(user1.id, user2.id)}_{max(user1.id, user2.id)}"
         
         # Get or create the chatroom with these two users
-        chatroom, created = ChatRoom.get_or_create_chatroom(user1= user1, user2= user2)
+        chatroom, users , created = ChatRoom.get_or_create_chatroom(user1= user1, user2= user2)
         if created:
             chatroom.users.add(user1, user2)
-        
+        print('chatroom',chatroom.room_id)
         # Return the room ID in a JSON response
         return JsonResponse({
             'room_id': chatroom.room_id,
+            'users': users,
             'created': created
         })
 
@@ -91,5 +86,7 @@ def user_chats(request, user_id):
             'messages': list(messages),
             'other_user': other_user_data,
         })
+
+        pprint(chats)
 
     return JsonResponse({'user_chats': chats})

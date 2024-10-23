@@ -58,7 +58,7 @@ function AppRoutes() {
           <Route path="/myListings" element={<Listings/>}/>
           <Route path="/conversation/:ownerId" element={<OwnerInfo/>}/>
           <Route path="/list-detail/:type/:id" element={<ListDetail/>}/>
-          <Route path='/chat/:room/' element={<Chatroom/>}/>
+          <Route path='/chat/:room/:otherUser' element={<Chatroom/>}/>
           <Route path="/all-chats" element={<UserChats/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>

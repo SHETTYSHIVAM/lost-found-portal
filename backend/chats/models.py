@@ -1,23 +1,33 @@
 from django.db import models
 from django.contrib.auth.models import User
+import hashlib
+
 # Create your models here.
 
 class ChatRoom(models.Model):
-    room_id = models.CharField(max_length=100)
+    room_id = models.CharField(max_length=200)
     users = models.ManyToManyField(User)
 
+    def create_id(user1, user2):
+        return hashlib.sha256(f"{user1.id}{user2.id}".encode('utf-8')).hexdigest()
+
+
     def get_or_create_chatroom(user1, user2):
-        # Sort user IDs to ensure uniqueness
-        room_id = f"chat_{min(user1.id, user2.id)}_{max(user1.id, user2.id)}"
+
+        room_id = ChatRoom.create_id(user1, user2)
         
-        # Get or create the chat room with these users
-        chatroom, created = ChatRoom.objects.get_or_create(room_id)
+        chatroom, created = ChatRoom.objects.get_or_create(room_id=room_id)
+        print('created', created)
         
-        # Add users to the room if it's newly created
         if created:
             chatroom.users.add(user1, user2)
+
+        users = list(chatroom.users.values('id', 'username'))
         
-        return chatroom, created
+        return chatroom, users,  created
+    
+    def __str__(self):
+        return self.room_id
     
 
 
