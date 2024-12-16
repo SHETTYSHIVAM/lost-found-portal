@@ -220,8 +220,8 @@ class LoginView(APIView):
 
 
 class LostItemView(APIView):
-    # # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_LostItem(self, pk=None):
         try:
@@ -284,8 +284,8 @@ class LostItemView(APIView):
 
 
 class FoundItemView(APIView):
-    # authentication_classes = [JWTAuthentication]
-   # permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_FoundItem(self, id):
         try:
@@ -359,7 +359,8 @@ def get_user_name_by_id(request, id):
 
 
 class CurrentUserDetailView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
     def get(self, request, *args, **kwargs):
         user = request.user  # Retrieve the currently authenticated user
