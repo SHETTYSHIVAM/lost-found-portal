@@ -1,4 +1,5 @@
 .idea
+/backend/env/
 /backend/venv/
 /backend/backend/const.py
 # Distribution / packaging
@@ -27,7 +28,7 @@ wheels/
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
-**/__pycache__/
+__pycache__/
 *.py[cod]
 *.pyc
 .idea

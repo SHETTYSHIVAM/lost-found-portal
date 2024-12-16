@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField # for storing array of keywords
+# from django.contrib.postgres.fields import ArrayField # for storing array of keywords
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -24,7 +24,7 @@ class LostItem(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="images/lost-items")
     description = models.TextField(blank=True, null=True)
     place = models.CharField(max_length=100, null=True)
-    keywords = ArrayField(models.CharField(max_length=200), blank=True, null=True)
+    # keywords = ArrayField(models.CharField(max_length=200), blank=True, null=True)
     date_lost = models.DateTimeField()
     is_found = models.BooleanField(default=False)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="lost_items")
@@ -43,7 +43,7 @@ class FoundItem(models.Model):
     image = models.ImageField(upload_to="images/found-items", blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     place = models.CharField(max_length=100, null=True)
-    keywords = ArrayField(models.CharField(max_length=200), blank=True, null=True)
+    # keywords = ArrayField(models.CharField(max_length=200), blank=True, null=True)
     date_found = models.DateTimeField()
     is_returned = models.BooleanField(default=False)
     finder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="found_items")
